@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Light Sage Clone</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <h2 padding>Accounts:</h2>
+    <ion-list>
+        <!-- <ion-item *ngFor="let table of tables"> -->
+          <!-- <ion-buttons> -->
+            <button ion-item (click)="openTable(table)" *ngFor="let table of tables">{{table}}</button>
+          <!-- </ion-buttons> -->
+        <!-- </ion-item> -->
+      </ion-list>
+</ion-content>
