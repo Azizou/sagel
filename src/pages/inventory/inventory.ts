@@ -28,7 +28,7 @@ export class InventoryPage {
 
   
 
-  addInventory(product){
+  add(product){
     this.productService.add(product);
   }
 

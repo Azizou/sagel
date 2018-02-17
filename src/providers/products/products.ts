@@ -16,7 +16,7 @@ export class ProductsProvider {
 
   }
 
-  add() {
+  add(product) {
 
   }
 

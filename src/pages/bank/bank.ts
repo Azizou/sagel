@@ -1,3 +1,4 @@
+import { Transaction } from './../../models/transaction';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,11 +16,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BankPage {
 
+  records: Transaction[] = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
+  }
+
+  add(){
+
   }
 
 }
