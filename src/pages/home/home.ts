@@ -1,3 +1,6 @@
+import { ExpensesPage } from './../expenses/expenses';
+import { SalesPage } from './../sales/sales';
+import { BankPage } from './../bank/bank';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Tables } from '../../models/constants';
@@ -25,15 +28,13 @@ export class HomePage {
   
   openTable(table){
     switch (table) {
-      case Tables.Bank: alert(`${table}: not yet implemented`);
+      case Tables.Bank: this.navCtrl.push(BankPage);
         break;
-      case Tables.Inventory: 
-        // alert(table);
-        this.navCtrl.push(InventoryPage);
+      case Tables.Inventory: this.navCtrl.push(InventoryPage);
         break;
-      case Tables.Sales: alert(`${table}: not yet implemented`);
+      case Tables.Sales:this.navCtrl.push(SalesPage);
         break;
-      case Tables.Expenses: alert(`${table}: not yet implemented`);
+      case Tables.Expenses: this.navCtrl.push(ExpensesPage);
         break;
       default:
       console.log(table)

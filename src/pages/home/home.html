@@ -5,12 +5,9 @@
 </ion-header>
 
 <ion-content>
-    <h2 padding>Accounts:</h2>
-    <ion-list>
-        <!-- <ion-item *ngFor="let table of tables"> -->
-          <!-- <ion-buttons> -->
-            <button ion-item (click)="openTable(table)" *ngFor="let table of tables">{{table}}</button>
-          <!-- </ion-buttons> -->
-        <!-- </ion-item> -->
-      </ion-list>
+  <h2 padding>Accounting Books:</h2>
+  <p padding>Here is the list of all the table reflecting the daily activities of the busness</p>
+  <ion-list>
+    <button ion-item (click)="openTable(table)" *ngFor="let table of tables">{{table}}</button>
+  </ion-list>
 </ion-content>
