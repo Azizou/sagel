@@ -1,5 +1,7 @@
+import PouchDB from 'pouchdb';
 import { Injectable } from '@angular/core';
-import { PouchDB } from 'pouchdb';
+
+
 /*
   Generated class for the PouchDbServiceProvider provider.
 
@@ -18,7 +20,7 @@ export class PouchDbServiceProvider {
   public configureForUser(profile): void {
 
     // This will eventually take an Auth0 profile. Starting out we will give it a default name from the Home component.
-    this.localDatabase = new PouchDB(this.getDatabaseName(profile), { adapter: 'websql' });
+    this.localDatabase = new PouchDB(this.getDatabaseName(profile));//, { adapter: 'websql' });
 
   }
 

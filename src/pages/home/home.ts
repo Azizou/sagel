@@ -11,7 +11,7 @@ import { InventoryPage } from '../inventory/inventory';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  private tables: any[];
+  tables: any[];
   constructor(public navCtrl: NavController) {
     this.tables = [];
   }

@@ -18,18 +18,21 @@ export class InventoryPage {
 
   products: Product[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public productService: ProductsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public productService: ProductsProvider) {
     this.products = []
   }
 
   ionViewDidLoad() {
-    this.productService.load();
+    this.products = this.productService.load();
+    console.log(this.products)
   }
 
-  
+  search(){
+    this.products = this.productService.query();
+  }
 
   add(product){
-    this.productService.add(product);
+    this.productService.create(product);
   }
 
 }
