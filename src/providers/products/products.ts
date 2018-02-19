@@ -7,14 +7,17 @@ import { Tables } from '../../models/constants';
 export class ProductsProvider {
 
   private pouchDbService: PouchDbServiceProvider;
-  private db : any;
+  db : any;
 
   products: Product[] = [];
   constructor() {
+  }
+
+  initialize(){
     this.pouchDbService = new PouchDbServiceProvider();
     this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
-    let localdb = this.pouchDbService.getDB();//might throw an error
-    this.db = localdb || null;
+    this.db = this.pouchDbService.getDB();//might throw an error
+    // this.db = localdb || null;
   }
 
   load() {
@@ -25,7 +28,16 @@ export class ProductsProvider {
       quantity: 215,
       broken: 15,
       remaining: 200
-    })];
+    }),
+    new Product({
+      date: Date.now(),
+      id: 10,
+      description: 'Oeufs',
+      quantity: 219,
+      broken: 5,
+      remaining: 214
+    })
+  ];
   }
 
   create(product) {
@@ -40,12 +52,13 @@ export class ProductsProvider {
   }
 
   query() : Product[] {
+    this.initialize();
     return this.read()
   }
 
   read() {
-    function allDocs() : any {
-      this.pdb.allDocs({ include_docs: true })
+    // function allDocs() : any {
+      return this.db.allDocs({ include_docs: true })
         .then(docs => {
           this.products = docs.rows.map(row => {
             row.doc.Date = new Date(row.doc.Date);
@@ -53,15 +66,15 @@ export class ProductsProvider {
           });
           return this.products;
         });
-    }
+    // }
 
-    this.db.changes({ live: true, since: 'now', include_docs: true })
-      .on('change', () => {
-        allDocs().then((emps) => {
+    // this.db.changes({ live: true, since: 'now', include_docs: true })
+    //   .on('change', () => {
+    //     allDocs().then((emps) => {
 
-          this.products = emps;
-        });
-      });
-    return allDocs()
+    //       this.products = emps;
+    //     });
+    //   });
+    // return allDocs()
   }
 }

@@ -1,13 +1,6 @@
 import PouchDB from 'pouchdb';
 import { Injectable } from '@angular/core';
 
-
-/*
-  Generated class for the PouchDbServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class PouchDbServiceProvider {
 
@@ -37,6 +30,9 @@ export class PouchDbServiceProvider {
 
   }
 
+  /** 
+   * Not likely to use this unless we are doing a clean or uninstall 
+  */
   public teardown(): void {
 
     // When we logout the user we need to close the database and set it to null.
@@ -52,16 +48,11 @@ export class PouchDbServiceProvider {
 
   }
 
+  /**
+   * 
+   * @param profile Sanitizer for local db name
+   */
   private getDatabaseName(profile: any): string {
-
-    // Database naming restrictions from https://wiki.apache.org/couchdb/HTTP_database_API
-    // --
-    // A database must be named with all lowercase letters (a-z), digits (0-9), or
-    // any of the _$()+-/ characters and must end with a slash in the URL. The name
-    // has to start with a lowercase letter (a-z)... Uppercase characters are NOT
-    // ALLOWED in database names.
-    // let dbName = profile.email
-
     let dbName = profile;
 
     return (dbName);

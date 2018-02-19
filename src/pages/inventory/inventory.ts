@@ -23,6 +23,7 @@ export class InventoryPage {
   }
 
   ionViewDidLoad() {
+    this.productService.initialize();
     this.products = this.productService.load();
     console.log(this.products)
   }
