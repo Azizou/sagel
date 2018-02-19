@@ -2,7 +2,7 @@ import { PouchDbServiceProvider } from './../pouch-db-service/pouch-db-service';
 import { Product } from './../../models/product';
 import { Injectable } from '@angular/core';
 import { Tables } from '../../models/constants';
-
+// https://youtu.be/HWbsN1QIIN8 Useful video
 @Injectable()
 export class ProductsProvider {
 
