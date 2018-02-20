@@ -22,7 +22,7 @@ export class ProductsProvider {
 
   load() {
     return [new Product({
-      date: Date.now(),
+      date: new Date().toISOString(),
       id: 5,
       description: 'Oeufs',
       quantity: 215,
@@ -30,7 +30,7 @@ export class ProductsProvider {
       remaining: 200
     }),
     new Product({
-      date: Date.now(),
+      date: new Date().toISOString(),
       id: 10,
       description: 'Oeufs',
       quantity: 219,
