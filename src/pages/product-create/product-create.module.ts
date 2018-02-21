@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ProductCreatePage } from './product-create';
@@ -8,6 +9,7 @@ import { ProductCreatePage } from './product-create';
   ],
   imports: [
     IonicPageModule.forChild(ProductCreatePage),
+    TranslateModule.forChild()
   ],
 })
 export class ProductCreatePageModule {}

@@ -14,9 +14,11 @@ export class ProductsProvider {
   }
 
   initialize(){
-    this.pouchDbService = new PouchDbServiceProvider();
-    this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
-    this.db = this.pouchDbService.getDB();//might throw an error
+    if(!this.db){
+      this.pouchDbService = new PouchDbServiceProvider();
+      this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
+      this.db = this.pouchDbService.getDB();//might throw an error
+    }
     // this.db = localdb || null;
   }
 
@@ -53,28 +55,23 @@ export class ProductsProvider {
 
   query() : Product[] {
     this.initialize();
-    return this.read()
-  }
+    if(!this.db){
+      return this.read()
+    }
 
-  read() {
-    // function allDocs() : any {
-      return this.db.allDocs({ include_docs: true })
-        .then(docs => {
-          this.products = docs.rows.map(row => {
-            row.doc.Date = new Date(row.doc.Date);
-            return row.doc;
-          });
-          return this.products;
-        });
-    // }
+    }  
+  read() : Product[]{
 
-    // this.db.changes({ live: true, since: 'now', include_docs: true })
-    //   .on('change', () => {
-    //     allDocs().then((emps) => {
+    let products = []
 
-    //       this.products = emps;
-    //     });
-    //   });
-    // return allDocs()
+    this.db.allDocs({include_docs: true}, (err, result) => {
+      if(!err){
+        let rows = result.rows;
+        for(let i = 0; i < rows.length; i++){
+          products.push(rows[i].doc);
+        }
+      }
+    });
+    return products;
   }
 }
