@@ -25,7 +25,7 @@ export class InventoryPage {
   ionViewDidLoad() {
     this.productService.initialize();
     this.currentProducts = this.productService.load();
-    // console.log(this.products)
+    // console.log(this.currentProducts);
   }
 
   search(){
@@ -36,11 +36,11 @@ export class InventoryPage {
     let addModal = this.modalCtrl.create('ProductCreatePage');
     addModal.onDidDismiss(product => {
       if (product) {
-        this.productService.create(product);
+        this.productService.add(product);
+        this.currentProducts = this.productService.load();
       }
     })
     addModal.present();
-
   }
 
 }

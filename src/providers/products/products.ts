@@ -1,4 +1,4 @@
-import { PouchDbServiceProvider } from './../pouch-db-service/pouch-db-service';
+import { PouchDbService } from './../pouch-db-service/pouch-db-service';
 import { Product } from './../../models/product';
 import { Injectable } from '@angular/core';
 import { Tables } from '../../models/constants';
@@ -6,7 +6,7 @@ import { Tables } from '../../models/constants';
 @Injectable()
 export class ProductsProvider {
 
-  private pouchDbService: PouchDbServiceProvider;
+  private pouchDbService: PouchDbService;
   db : any;
 
   products: Product[] = [];
@@ -15,51 +15,47 @@ export class ProductsProvider {
 
   initialize(){
     if(!this.db){
-      this.pouchDbService = new PouchDbServiceProvider();
+      this.pouchDbService = new PouchDbService();
       this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
-      this.db = this.pouchDbService.getDB();//might throw an error
+      try {
+        this.db = this.pouchDbService.getDB();//might throw an error
+      }
+      catch(error){
+        console.error("Could not initialize the db");        
+        throw error;
+        
+      }
     }
-    // this.db = localdb || null;
   }
 
   load() {
-    return [new Product({
-      date: new Date().toISOString(),
-      id: 5,
-      description: 'Oeufs',
-      quantity: 215,
-      broken: 15,
-      remaining: 200
-    }),
-    new Product({
-      date: new Date().toISOString(),
-      id: 10,
-      description: 'Oeufs',
-      quantity: 219,
-      broken: 5,
-      remaining: 214
-    })
-  ];
+    return this.query();
   }
 
-  create(product) {
+  add(product) {
+    this.db.post(product);
   }
 
+  /**
+   * Does the same thing as adding a new product.
+   * @param product 
+   */
   update(product){
-
+    return this.db.put(product);
   }
 
-  delete() {
-
+  delete(product) {
+    this.db.remove(product)
   }
 
-  query() : Product[] {
+  query(): Product[] {
     this.initialize();
-    if(!this.db){
+    if (this.db) {
       return this.read()
     }
 
-    }  
+  }
+
   read() : Product[]{
 
     let products = []
