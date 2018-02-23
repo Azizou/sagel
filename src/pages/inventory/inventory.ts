@@ -1,7 +1,8 @@
-import { ProductsProvider } from './../../providers/products/products';
+import { ItemsProvider } from './../../providers/items/items';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Product } from '../../models/product';
+// import { ItemsProvider } from '../../providers/items/items';
 /**
  * Generated class for the InventoryPage page.
  *
@@ -18,18 +19,18 @@ export class InventoryPage {
 
   currentProducts: Product[] = [];
 
-  constructor(public navCtrl: NavController, public productService: ProductsProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public productService: ItemsProvider, public modalCtrl: ModalController) {
     this.currentProducts = []
   }
 
   ionViewDidLoad() {
     this.productService.initialize();
-    this.currentProducts = this.productService.load();
+    this.currentProducts = this.productService.load() as Product[];
     // console.log(this.currentProducts);
   }
 
   search(){
-    this.currentProducts = this.productService.query();
+    this.currentProducts = this.productService.query()  as Product[];
   }
 
   add(product){
@@ -37,7 +38,7 @@ export class InventoryPage {
     addModal.onDidDismiss(product => {
       if (product) {
         this.productService.add(product);
-        this.currentProducts = this.productService.load();
+        this.currentProducts = this.productService.load() as Product[];
       }
     })
     addModal.present();

@@ -19,6 +19,7 @@ import { ProductsProvider } from '../providers/products/products';
 import { PouchDbService } from '../providers/pouch-db-service/pouch-db-service';
 import { BankPage } from '../pages/bank/bank';
 import { SalesPage } from '../pages/sales/sales';
+import { ItemsProvider } from '../providers/items/items';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -65,7 +66,8 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductsProvider,
-    PouchDbService
+    PouchDbService,
+    ItemsProvider
   ]
 })
 export class AppModule {}
