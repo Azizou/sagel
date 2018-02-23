@@ -2,13 +2,6 @@ import { ItemsProvider } from './../../providers/items/items';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Product } from '../../models/product';
-// import { ItemsProvider } from '../../providers/items/items';
-/**
- * Generated class for the InventoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

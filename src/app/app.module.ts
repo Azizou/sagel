@@ -15,7 +15,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ProductsProvider } from '../providers/products/products';
 import { PouchDbService } from '../providers/pouch-db-service/pouch-db-service';
 import { BankPage } from '../pages/bank/bank';
 import { SalesPage } from '../pages/sales/sales';
@@ -65,7 +64,6 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductsProvider,
     PouchDbService,
     ItemsProvider
   ]
