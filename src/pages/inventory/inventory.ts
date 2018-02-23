@@ -10,20 +10,20 @@ import { Product } from '../../models/product';
 })
 export class InventoryPage {
 
-  currentProducts: Product[] = [];
+  currentItems: Product[] = [];
 
   constructor(public navCtrl: NavController, public productService: ItemsProvider, public modalCtrl: ModalController) {
-    this.currentProducts = []
+    this.currentItems = []
   }
 
   ionViewDidLoad() {
     this.productService.initialize();
-    this.currentProducts = this.productService.load() as Product[];
-    // console.log(this.currentProducts);
+    this.currentItems = this.productService.load() as Product[];
+    // console.log(this.currentItems);
   }
 
   search(){
-    this.currentProducts = this.productService.query()  as Product[];
+    this.currentItems = this.productService.query()  as Product[];
   }
 
   add(product){
@@ -31,7 +31,7 @@ export class InventoryPage {
     addModal.onDidDismiss(product => {
       if (product) {
         this.productService.add(product);
-        this.currentProducts = this.productService.load() as Product[];
+        this.currentItems = this.productService.load() as Product[];
       }
     })
     addModal.present();
