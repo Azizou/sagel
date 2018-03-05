@@ -32,11 +32,14 @@ export class ItemsProvider {
     return this.query();
   }
 
-  add(item) {
+  add(item) { // maybe create a custom id and use put instead of post to benefit from sorting base on id.. timestamp
     this.db.post(item);
   }
 
-  update(item){
+  update(item){ // check if _id is present
+    if(!item._id){
+      throw new Error("Cannot update item without an _id, maybe you want to first create it");      
+    }
     return this.db.put(item);
   }
 
