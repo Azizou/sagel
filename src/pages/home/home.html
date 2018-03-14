@@ -10,8 +10,24 @@
   <ion-list class="card-background-page">
       <ion-card (click)="openTable(table)" *ngFor="let table of tables">
           <div class="card-title">{{table}}</div>
-          <div class="card-subtitle">41 Listings</div>
+          <!-- <div class="card-subtitle">41 Listings</div> -->
       </ion-card>
+      <form (ngSubmit)="generateReport()" >
+        <ion-item>
+          <ion-label>From: </ion-label>
+          <ion-input type="text" [(ngModel)]="params.fromDate" name="fromDate"></ion-input>
+          <button (click)="setStart()">From</button>
+          <button (click)="setEnd()">To</button>
+        </ion-item>
+        <ion-item>
+          <ion-label>To: </ion-label>
+          <ion-input type="text" [(ngModel)]="params.toDate" name="toDate"></ion-input>
+        </ion-item>
+        <button ion-button type="submit" block>Generate Report</button>
+      </form>
+      <!-- <ion-card (click)="generateReport()"> -->
+        <!-- View Report -->
+      <!-- </ion-card> -->
 
     <!-- <button ion-item (click)="openTable(table)" *ngFor="let table of tables">{{table}}</button> -->
   </ion-list>

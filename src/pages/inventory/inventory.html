@@ -15,13 +15,16 @@
 
 <ion-content padding>
   <ion-list>
-    <!-- Replace with a list of card -->
-    <!-- <ion-item *ngFor="let record of products" >
-      {{record.description}}
-    </ion-item> -->
     <ion-card *ngFor="let record of currentItems" padding>
-      <div class="card-title" end>{{record.description}}</div>
+      <div class="card-title" end>No: {{record.reference}} of <span class="date" end>{{record.date}}</span></div>
       <div class="card-subtitle">{{record.date}}</div>
+      <div class="card-description">
+        <div>Description: {{record.description}}</div>
+        <div>Collected: {{record.collected}}</div>
+        <div>Broken: {{record.broken}}</div>
+        <div>Remaining: {{record.remaining}}</div>
+      </div>
+      <!-- <div></div> -->
     </ion-card>
   </ion-list>
 

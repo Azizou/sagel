@@ -1,6 +1,6 @@
 {
   "name": "sagel",
-  "app_id": "",
+  "app_id": "ae56394a",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

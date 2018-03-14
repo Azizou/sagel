@@ -13,10 +13,12 @@ export class ItemsProvider {
   constructor() {
   }
 
-  initialize(){
+  initialize(dbName){
     if(!this.db){
       this.pouchDbService = new PouchDbService();
-      this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
+      //this should be configurable
+      this.pouchDbService.configureForUser(dbName.toLowerCase());
+      // this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
       try {
         this.db = this.pouchDbService.getDB();//might throw an error
       }
@@ -45,7 +47,6 @@ export class ItemsProvider {
   }
 
   query(): Item[] {
-    this.initialize();
     if (this.db) {
       return this.read()
     }

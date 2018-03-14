@@ -2,6 +2,7 @@ import { ItemsProvider } from './../../providers/items/items';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Product } from '../../models/product';
+import { Tables } from '../../models/constants';
 
 @IonicPage()
 @Component({
@@ -17,9 +18,8 @@ export class InventoryPage {
   }
 
   ionViewDidLoad() {
-    this.productService.initialize();
+    this.productService.initialize(Tables.Inventory);
     this.currentItems = this.productService.load() as Product[];
-    // console.log(this.currentItems);
   }
 
   search(){

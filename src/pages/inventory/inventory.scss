@@ -1,7 +1,7 @@
 page-inventory {
     .card-title {
         top: 36%;
-        font-size: 2.0em;
+        font-size: 1.3em;
         width: 100%;
         font-weight: bold;
         color: #333;
@@ -11,6 +11,10 @@ page-inventory {
         top: 52%;
         width: 100%;
         color: #888;
+    }
+    .date {
+        font-weight: normal;
+        font-size: 1.0em;
     }
 
 }
