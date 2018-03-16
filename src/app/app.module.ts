@@ -21,6 +21,9 @@ import { BankPage } from '../pages/bank/bank';
 import { SalesPage } from '../pages/sales/sales';
 import { ItemsProvider } from '../providers/items/items';
 
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
@@ -67,7 +70,9 @@ export function createTranslateLoader(http: HttpClient) {
     DatePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PouchDbService,
-    ItemsProvider
+    ItemsProvider,
+    File,
+    FileOpener
   ]
 })
 export class AppModule {}

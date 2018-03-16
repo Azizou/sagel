@@ -1,7 +1,7 @@
 import { Item } from "./item";
 
 export class Product extends Item{
-    id: string;
+    _id: string;
     reference: string;
     date: Date;
     quantity: number;

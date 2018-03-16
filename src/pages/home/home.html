@@ -13,11 +13,11 @@
           <!-- <div class="card-subtitle">41 Listings</div> -->
       </ion-card>
       <form (ngSubmit)="generateReport()" >
+          <button (click)="setStart()">From</button>
+          <button (click)="setEnd()">To</button>
         <ion-item>
           <ion-label>From: </ion-label>
           <ion-input type="text" [(ngModel)]="params.fromDate" name="fromDate"></ion-input>
-          <button (click)="setStart()">From</button>
-          <button (click)="setEnd()">To</button>
         </ion-item>
         <ion-item>
           <ion-label>To: </ion-label>

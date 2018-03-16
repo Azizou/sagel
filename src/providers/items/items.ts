@@ -1,7 +1,7 @@
 import { Item } from './../../models/item';
 import { PouchDbService } from './../pouch-db-service/pouch-db-service';
 import { Injectable } from '@angular/core';
-import { Tables } from '../../models/constants';
+// import { Tables } from '../../models/constants';
 // https://youtu.be/HWbsN1QIIN8 Useful video
 @Injectable()
 export class ItemsProvider {
@@ -46,13 +46,13 @@ export class ItemsProvider {
     this.db.remove(item)
   }
 
-  query(): Item[] {
+  query(params = {}): Item[] {
     if (this.db) {
       return this.read()
     }
 
   }
-
+  //use time stamp as id
   read() : Item[]{
 
     let items = []

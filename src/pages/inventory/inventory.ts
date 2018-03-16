@@ -30,6 +30,7 @@ export class InventoryPage {
     let addModal = this.modalCtrl.create('ProductCreatePage');
     addModal.onDidDismiss(product => {
       if (product) {
+        product._id = Date.now() + ''
         this.productService.add(product);
         this.currentItems = this.productService.load() as Product[];
       }

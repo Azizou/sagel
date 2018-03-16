@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Config, Nav, Platform } from 'ionic-angular';
+import { Config, Platform } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateService } from '@ngx-translate/core';
