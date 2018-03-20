@@ -21,14 +21,14 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class HomePage {
   tables: any[];
+  products: Product[];
   pdfObject = null;
   params = {
-    fromDate: '', // use the datepicker plugin for these later
-    toDate: '',
-    text: 'Dummy Text, you know it'
+    fromDate: '10-08-2017', // use the datepicker plugin for these later
+    toDate: '20-08-2017',
   }
   
-  constructor(public navCtrl: NavController, private plt: Platform  , private datePicker: DatePicker, private file: File, private fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController, private dbService: ItemsProvider,  private plt: Platform  , private datePicker: DatePicker, private file: File, private fileOpener: FileOpener) {
     this.tables = [];
   }
 
@@ -40,6 +40,13 @@ export class HomePage {
     for(let table in Tables){
       this.tables.push(table.toString())
     }
+    this.dbService.initialize(Tables.Inventory);
+    // this.products = this.dbService.load() as Product[]
+  }
+  
+  ionViewDidEnter(){
+    this.products = this.dbService.load() as Product[]
+   
   }
   
   openTable(table){
@@ -62,13 +69,13 @@ export class HomePage {
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+      // androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     }).then(
       date => console.log('Got date: ', date),
       err => console.log('Error occurred while getting date: ', err)
     );
   }
-
+  
   setEnd(){
     this.datePicker.show({
       date: new Date(),
@@ -85,66 +92,63 @@ export class HomePage {
    * 
    */
   generateReport(){
-
-    this.createReport();
-    this.downloadPdf();
-    return;
-    const start = this.params.fromDate;
-    const end = this.params.toDate;
-    const tables = [Tables.Inventory, Tables.Sales, Tables.Expenses, Tables.Bank ]
-    let db = new ItemsProvider();
-    var records = {};
+    // alert("generate report called")
+    // const start = this.params.fromDate;
+    // const end = this.params.toDate;
+    // const tables = [Tables.Inventory]//, Tables.Sales, Tables.Expenses, Tables.Bank ]
+    // let db = new ItemsProvider();
+    // var records = {};
     //Query the data from each table to be included in the result
-    for(let i=0; i < tables.length; i++){
-      db.initialize(tables[i]);
-      records[tables[i]] = db.query({start, end})
-    }
+    // for(let i=0; i < tables.length; i++){
+      // records[tables[i]] = this.dbService.load();// query()//{start, end})
+    // }
 
     //create a table for each record
     // Products
-    let products = records[Tables.Inventory] as Product[]
-    let productTable = this.getTable(products);
 
-    let sales = records[Tables.Sales] as Product[]
-    let salesTable = this.getTable(sales);
+    // console.log(products)
+    // let productTable = this.getTable(products);
 
-    let expense = records[Tables.Expenses] as Product[]
-    let expenseTable = this.getTable(expense);
-
-    let bank = records[Tables.Inventory] as Product[]
-    let bankTable = this.getTable(bank);
-
-  }
-
-  getTable(item){
-    return "Not yet implemented"
+    this.createReport();
+    this.downloadPdf();
   }
 
   createReport(){
+    let td = []
+    for (let i = 0; i < this.products.length; i++){
+      td.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
+    }
     var docDefinition = {
       content: [
-        { text: 'REMINDER', style: 'header' },
-        { text: new Date().toTimeString(), alignment: 'right' },
-
+        { text: 'Rapport des activites du:', style: 'bigheader', alignment: 'center'},
         { text: 'From', style: 'subheader' },
-        { text: this.params.fromDate },
-
+        { text: new Date(this.params.fromDate).toTimeString() },
         { text: 'To', style: 'subheader' },
-        this.params.toDate,
+        { text: new Date(this.params.toDate).toTimeString()},
 
-        { text: this.params.text, style: 'story', margin: [0, 20, 0, 20] },
+        // { text: this.params.fromDate },
+
+        // this.params.toDate,
+
+        { text: 'Les proudctions', style: 'header', alignment: 'center', },
 
         {
-          ul: [
-            'Bacon',
-            'Rips',
-            'BBQ',
-          ]
+          // alignment: 'center',s
+          table: {
+            headerRows: 1,
+            body: [
+              [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Restant', style: 'header' }]            
+            ].concat(td)
+          }
         }
       ],
       styles: {
         header: {
           fontSize: 18,
+          bold: true,
+        },
+        bigheader: {
+          fontSize: 24,
           bold: true,
         },
         subheader: {

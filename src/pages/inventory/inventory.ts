@@ -19,7 +19,7 @@ export class InventoryPage {
 
   ionViewDidLoad() {
     this.productService.initialize(Tables.Inventory);
-    this.currentItems = this.productService.load() as Product[];
+    this.currentItems = this.productService.load() as Product[];                                                                                                                                                                                                                                                    
   }
 
   search(){

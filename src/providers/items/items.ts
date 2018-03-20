@@ -49,6 +49,9 @@ export class ItemsProvider {
   query(params = {}): Item[] {
     if (this.db) {
       return this.read()
+    } else {
+      console.log("DB not found");
+      
     }
 
   }
@@ -63,6 +66,9 @@ export class ItemsProvider {
         for(let i = 0; i < rows.length; i++){
           items.push(rows[i].doc);
         }
+      } else {
+        console.warn(err);
+        
       }
     });
     return items;
