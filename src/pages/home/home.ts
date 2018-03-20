@@ -25,7 +25,7 @@ export class HomePage {
   pdfObject = null;
   params = {
     fromDate: '10-08-2017', // use the datepicker plugin for these later
-    toDate: '20-08-2017',
+    toDate: '10-18-2017',
   }
   
   constructor(public navCtrl: NavController, private dbService: ItemsProvider,  private plt: Platform  , private datePicker: DatePicker, private file: File, private fileOpener: FileOpener) {
@@ -115,23 +115,32 @@ export class HomePage {
 
   createReport(){
     let td = []
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     for (let i = 0; i < this.products.length; i++){
       td.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
     }
     var docDefinition = {
       content: [
         { text: 'Rapport des activites du:', style: 'bigheader', alignment: 'center'},
-        { text: 'From', style: 'subheader' },
-        { text: new Date(this.params.fromDate).toTimeString() },
-        { text: 'To', style: 'subheader' },
-        { text: new Date(this.params.toDate).toTimeString()},
+        { text: 
+          [{ text: 'Du ', style: 'subheader' },
+          { text: new Date(this.params.fromDate).toLocaleDateString('fr', dateOptions) }, 
+          { text: 'au ', style: 'subheader' },
+          { text: new Date(this.params.toDate).toLocaleDateString('fr', dateOptions)} ],
+          alignment: 'center',
+          style: 'subheader'
+        },
+          '',
+        // { text: new Date(this.params.fromDate).toTimeString() },
+        
+        // { text: new Date(this.params.toDate).toTimeString()},
 
         // { text: this.params.fromDate },
 
         // this.params.toDate,
 
         { text: 'Les proudctions', style: 'header', alignment: 'center', },
-
+          '',
         {
           // alignment: 'center',s
           table: {
@@ -179,6 +188,7 @@ export class HomePage {
       });
     } else {
       // On a browser simply use download!
+      // this.pdfObject.open();
       this.pdfObject.download();
     }
   }
