@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ItemsProvider {
 
-  private pouchDbService: PouchDbService;
   dbs = [];
 
   items: Item[] = [];

@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Tables } from '../../models/constants';
 import { InventoryPage } from '../inventory/inventory';
-import { DatePicker } from '@ionic-native/date-picker';
 
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
@@ -30,7 +29,7 @@ export class HomePage {
     toDate: '10-18-2017',
   }
   
-  constructor(public navCtrl: NavController, private dbService: ItemsProvider,  private plt: Platform  , private datePicker: DatePicker, private file: File, private fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController, private dbService: ItemsProvider,  private plt: Platform, private file: File, private fileOpener: FileOpener) {
     this.tables = [];
   }
 
