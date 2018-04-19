@@ -13,6 +13,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { ItemsProvider } from '../../providers/items/items';
 import { Product } from '../../models/product';
+import { Sale } from '../../models/sale';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -22,6 +23,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class HomePage {
   tables: any[];
   products: Product[];
+  sales: Sale[];
   pdfObject = null;
   params = {
     fromDate: '10-08-2017', // use the datepicker plugin for these later
@@ -41,10 +43,12 @@ export class HomePage {
       this.tables.push(table.toString())
     }
     this.dbService.initialize(Tables.Inventory);
+    this.dbService.initialize(Tables.Sales);
   }
   
   ionViewDidEnter(){
-    this.products = this.dbService.load() as Product[]
+    this.products = this.dbService.load(Tables.Inventory) as Product[];
+    this.sales = this.dbService.load(Tables.Sales) as Sale[];
    
   }
   
@@ -93,10 +97,14 @@ export class HomePage {
   }
 
   createReport(){
-    let td = []
+    let ptd = []
+    let std = []
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     for (let i = 0; i < this.products.length; i++){
-      td.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
+      ptd.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
+    }
+    for (let i = 0; i < this.sales.length; i++){
+      std.push([this.sales[i].date, this.sales[i].description, this.sales[i].quantity, this.sales[i].cost_of_sale, this.sales[i].reference ])
     }
     var docDefinition = {
       content: [
@@ -126,7 +134,20 @@ export class HomePage {
             headerRows: 1,
             body: [
               [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Restant', style: 'header' }]            
-            ].concat(td)
+            ].concat(ptd)
+          }
+        },
+
+        //Sales
+        { text: 'Vente', style: 'header', alignment: 'center', },
+          '',
+        {
+          // alignment: 'center',s
+          table: {
+            headerRows: 1,
+            body: [
+              [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Casser', style: 'header' }]            
+            ].concat(std)
           }
         }
       ],

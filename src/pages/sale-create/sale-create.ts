@@ -24,7 +24,7 @@ export class SaleCreatePage {
       description: [''],
       reference: ['', Validators.required],
       date: ['', Validators.required],
-      cost: ['', Validators.required],
+      cost_of_sale: ['', Validators.required],
       quantity: ['', Validators.required],
       received: ['', Validators.required],
       remaining: ['', Validators.required],

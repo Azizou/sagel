@@ -1,18 +1,41 @@
-<!--
-  Generated template for the SalesPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
     <ion-title>Sales</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="primary" (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only color="primary" (click)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list>
+    <ion-card *ngFor="let record of currentItems" padding>
+      <!-- <div class="card-title" end>No: {{record.reference}} of <span class="date" end>{{record.date}}</span></div> -->
+      <div class="card-subtitle">{{record.date}}
+        <button ion-button icon-only color="primary" (click)="delete(record)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </div>
+      <div class="card-description">
+        <div>Description: {{record.description}}</div>
+        <ion-buttons end>
+          <!-- <button ion-button icon-only color="primary" (click)="delete(record)">  
+            <ion-icon name="trash" ></ion-icon>
+          </button> -->
+          <!-- <input type="hidden" name="record_id" -->
+        </ion-buttons>
+        <div>Quantity: {{record.quantity}}</div>
+        <div>Reference: {{record.reference}}</div>
+        <div>Date: {{record.date}}</div>
+      </div>
+      <!-- <div></div> -->
+    </ion-card>
+  </ion-list>
 
 </ion-content>

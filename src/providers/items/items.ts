@@ -7,48 +7,47 @@ import { Injectable } from '@angular/core';
 export class ItemsProvider {
 
   private pouchDbService: PouchDbService;
-  db : any;
+  dbs = [];
 
   items: Item[] = [];
   constructor() {
   }
 
   initialize(dbName){
-    if(!this.db){
-      this.pouchDbService = new PouchDbService();
+    if(!this.dbs[dbName]){
+      let pouchDbService = new PouchDbService();
       //this should be configurable
-      this.pouchDbService.configureForUser(dbName.toLowerCase());
+      pouchDbService.configureForUser(dbName.toLowerCase());
       // this.pouchDbService.configureForUser(Tables.Inventory.toLowerCase());
       try {
-        this.db = this.pouchDbService.getDB();//might throw an error
+        this.dbs[dbName] = pouchDbService.getDB();//might throw an error
       }
       catch(error){
-        console.error("Could not initialize the db");        
-        throw error;
-        
+        console.error("Could not initialize the db for " + dbName);        
+        throw error;        
       }
     }
   }
 
-  load() {
-    return this.query();
+  load(dbName) {
+    return this.query(dbName);
   }
 
-  add(item) {
-    this.db.post(item);
+  add(dbName,item) {
+    this.dbs[dbName].post(item);
   }
 
-  update(item){
-    return this.db.put(item);
+  update(dbName, item){
+    return this.dbs[dbName].put(item);
   }
 
-  delete(item) {
-    this.db.remove(item)
+  delete(dbName, item) {
+    this.dbs[dbName].remove(item)
   }
 
-  query(params = {}): Item[] {
-    if (this.db) {
-      return this.read()
+  query(dbName, params = {}): Item[] {
+    if (this.dbs[dbName]) {
+      return this.read(dbName)
     } else {
       console.log("DB not found");
       
@@ -56,11 +55,11 @@ export class ItemsProvider {
 
   }
   //use time stamp as id
-  read() : Item[]{
+  read(dbName) : Item[]{
 
     let items = []
 
-    this.db.allDocs({include_docs: true}, (err, result) => {
+    this.dbs[dbName].allDocs({include_docs: true}, (err, result) => {
       if(!err){
         let rows = result.rows;
         for(let i = 0; i < rows.length; i++){

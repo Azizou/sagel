@@ -19,6 +19,7 @@ import { Tables } from '../../models/constants';
 export class SalesPage {
 
   currentItems: Sale[] = [];
+  dbName = Tables.Sales;
 
   constructor(public navCtrl: NavController, public saleService: ItemsProvider, public modalCtrl: ModalController) {
     this.currentItems = []
@@ -26,27 +27,27 @@ export class SalesPage {
 
   ionViewDidLoad() {
     this.saleService.initialize(Tables.Sales);
-    this.currentItems = this.saleService.load() as Sale[];
+    this.currentItems = this.saleService.load(this.dbName) as Sale[];
   }
 
   search(){
-    this.currentItems = this.saleService.query()  as Sale[];
+    this.currentItems = this.saleService.query(this.dbName)  as Sale[];
   }
 
   add(sale){
     let addModal = this.modalCtrl.create('SaleCreatePage');
-    addModal.onDidDismiss(product => {
-      if (product) {
+    addModal.onDidDismiss(sale => {
+      if (sale) {
         sale._id = Date.now() + ''
-        this.saleService.add(sale);
-        this.currentItems = this.saleService.load() as Sale[];
+        this.saleService.add(this.dbName, sale);
+        this.currentItems = this.saleService.load(this.dbName, ) as Sale[];
       }
     })
     addModal.present();
   }
   
   delete(record){
-    this.saleService.delete(record);
-    this.currentItems = this.saleService.load() as Sale[];
+    this.saleService.delete(this.dbName, record);
+    this.currentItems = this.saleService.load(this.dbName) as Sale[];
   }
 }

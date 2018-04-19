@@ -12,18 +12,20 @@ import { Tables } from '../../models/constants';
 export class InventoryPage {
 
   currentItems: Product[] = [];
+  dbName = Tables.Inventory;
 
   constructor(public navCtrl: NavController, public productService: ItemsProvider, public modalCtrl: ModalController) {
     this.currentItems = []
+    
   }
 
   ionViewDidLoad() {
     this.productService.initialize(Tables.Inventory);
-    this.currentItems = this.productService.load() as Product[];                                                                                                                                                                                                                                                    
+    this.currentItems = this.productService.load(this.dbName) as Product[];                                                                                                                                                                                                                                                    
   }
 
   search(){
-    this.currentItems = this.productService.query()  as Product[];
+    this.currentItems = this.productService.query(this.dbName)  as Product[];
   }
 
   add(product){
@@ -31,15 +33,15 @@ export class InventoryPage {
     addModal.onDidDismiss(product => {
       if (product) {
         product._id = Date.now() + ''
-        this.productService.add(product);
-        this.currentItems = this.productService.load() as Product[];
+        this.productService.add(this.dbName,product);
+        this.currentItems = this.productService.load(this.dbName) as Product[];
       }
     })
     addModal.present();
   }
   
   delete(record){
-    this.productService.delete(record);
-    this.currentItems = this.productService.load() as Product[];
+    this.productService.delete(this.dbName, record);
+    this.currentItems = this.productService.load(this.dbName) as Product[];
   }
 }
