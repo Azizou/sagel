@@ -23,6 +23,7 @@ import { ItemsProvider } from '../providers/items/items';
 
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
+// import { PdfServiceProvider } from '../providers/pdf-service/pdf-service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -72,7 +73,8 @@ export function createTranslateLoader(http: HttpClient) {
     PouchDbService,
     ItemsProvider,
     File,
-    FileOpener
+    FileOpener,
+    // PdfServiceProvider
   ]
 })
 export class AppModule {}

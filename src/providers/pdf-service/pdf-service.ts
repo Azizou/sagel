@@ -1,76 +1,35 @@
-import { ExpensesPage } from './../expenses/expenses';
-import { SalesPage } from './../sales/sales';
-import { BankPage } from './../bank/bank';
-import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
-import { Tables } from '../../models/constants';
-import { InventoryPage } from '../inventory/inventory';
-import { DatePicker } from '@ionic-native/date-picker';
-
+import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { ItemsProvider } from '../../providers/items/items';
 import { Product } from '../../models/product';
+import { Platform } from 'ionic-angular';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+/*
+  Generated class for the PdfServiceProvider provider.
 
-@Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
-})
-export class HomePage {
-  tables: any[];
-  products: Product[];
-  pdfObject = null;
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+@Injectable()
+export class PdfServiceProvider {
+  private pdfObject;
+  private products: Product[];
   params = {
     fromDate: '10-08-2017', // use the datepicker plugin for these later
     toDate: '10-18-2017',
   }
-  
-  constructor(public navCtrl: NavController, private dbService: ItemsProvider,  private plt: Platform  , private datePicker: DatePicker, private file: File, private fileOpener: FileOpener) {
-    this.tables = [];
+  constructor(private dbService: ItemsProvider, private plt: Platform, private file: File, private fileOpener: FileOpener) {
+    console.log('Hello PdfServiceProvider Provider');
   }
-
-  ionViewDidLoad(){
-   this.refresh()
-  }
-
-  refresh(){
-    for(let table in Tables){
-      this.tables.push(table.toString())
-    }
-    this.dbService.initialize(Tables.Inventory);
-  }
-  
-  ionViewDidEnter(){
-    this.products = this.dbService.load() as Product[]
-   
-  }
-  
-  openTable(table){
-    switch (table) {
-      case Tables.Bank: this.navCtrl.push(BankPage);
-        break;
-      case Tables.Inventory: this.navCtrl.push(InventoryPage);
-        break;
-      case Tables.Sales:this.navCtrl.push(SalesPage);
-        break;
-      case Tables.Expenses: this.navCtrl.push(ExpensesPage);
-        break;
-      default:
-      console.log(table)
-        break;
-    }
-  }
-
-
 
   /** 
-   * Given a start and end time, generate a report of the data recorded in that time period as a pdf 
-   * 
-   */
-  generateReport(){
+ * Given a start and end time, generate a report of the data recorded in that time period as a pdf 
+ * 
+ */
+  generateReport() {
     // alert("generate report called")
     // const start = this.params.fromDate;
     // const end = this.params.toDate;
@@ -79,7 +38,7 @@ export class HomePage {
     // var records = {};
     //Query the data from each table to be included in the result
     // for(let i=0; i < tables.length; i++){
-      // records[tables[i]] = this.dbService.load();// query()//{start, end})
+    // records[tables[i]] = this.dbService.load();// query()//{start, end})
     // }
 
     //create a table for each record
@@ -92,26 +51,27 @@ export class HomePage {
     this.downloadPdf();
   }
 
-  createReport(){
+  createReport() {
     let td = []
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    for (let i = 0; i < this.products.length; i++){
-      td.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
+    for (let i = 0; i < this.products.length; i++) {
+      td.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining])
     }
     var docDefinition = {
       content: [
-        { text: 'Rapport des activites du:', style: 'bigheader', alignment: 'center'},
-        { text: 
-          [{ text: 'Du ', style: 'subheader' },
-          { text: new Date(this.params.fromDate).toLocaleDateString('fr', dateOptions) }, 
-          { text: 'au ', style: 'subheader' },
-          { text: new Date(this.params.toDate).toLocaleDateString('fr', dateOptions)} ],
+        { text: 'Rapport des activites du:', style: 'bigheader', alignment: 'center' },
+        {
+          text:
+            [{ text: 'Du ', style: 'subheader' },
+            { text: new Date(this.params.fromDate).toLocaleDateString('fr', dateOptions) },
+            { text: 'au ', style: 'subheader' },
+            { text: new Date(this.params.toDate).toLocaleDateString('fr', dateOptions) }],
           alignment: 'center',
           style: 'subheader'
         },
-          '',
+        '',
         // { text: new Date(this.params.fromDate).toTimeString() },
-        
+
         // { text: new Date(this.params.toDate).toTimeString()},
 
         // { text: this.params.fromDate },
@@ -119,13 +79,13 @@ export class HomePage {
         // this.params.toDate,
 
         { text: 'Les proudctions', style: 'header', alignment: 'center', },
-          '',
+        '',
         {
           // alignment: 'center',s
           table: {
             headerRows: 1,
             body: [
-              [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Restant', style: 'header' }]            
+              [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Restant', style: 'header' }]
             ].concat(td)
           }
         }
@@ -171,4 +131,5 @@ export class HomePage {
       this.pdfObject.download();
     }
   }
+
 }

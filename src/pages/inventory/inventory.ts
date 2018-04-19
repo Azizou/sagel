@@ -37,5 +37,9 @@ export class InventoryPage {
     })
     addModal.present();
   }
-
+  
+  delete(record){
+    this.productService.delete(record);
+    this.currentItems = this.productService.load() as Product[];
+  }
 }

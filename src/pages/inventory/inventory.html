@@ -17,9 +17,19 @@
   <ion-list>
     <ion-card *ngFor="let record of currentItems" padding>
       <!-- <div class="card-title" end>No: {{record.reference}} of <span class="date" end>{{record.date}}</span></div> -->
-      <div class="card-subtitle">{{record.date}}</div>
+      <div class="card-subtitle">{{record.date}}
+        <button ion-button icon-only color="primary" (click)="delete(record)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </div>
       <div class="card-description">
         <div>Description: {{record.description}}</div>
+        <ion-buttons end>
+          <!-- <button ion-button icon-only color="primary" (click)="delete(record)">  
+            <ion-icon name="trash" ></ion-icon>
+          </button> -->
+          <!-- <input type="hidden" name="record_id" -->
+        </ion-buttons>
         <div>Collected: {{record.collected}}</div>
         <div>Broken: {{record.broken}}</div>
         <div>Remaining: {{record.remaining}}</div>
