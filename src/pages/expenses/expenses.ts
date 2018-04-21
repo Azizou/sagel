@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { Expense } from './../../models/expense';
+import { Tables } from '../../models/constants';
+import { ItemsProvider } from '../../providers/items/items';
 /**
  * Generated class for the ExpensesPage page.
  *
@@ -15,11 +17,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ExpensesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  currentItems: Expense[] = [];
+  dbName = Tables.Expenses;
+
+  constructor(public navCtrl: NavController, public expenseService: ItemsProvider, public modalCtrl: ModalController) {
+    this.currentItems = []
+    
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ExpensesPage');
+    this.expenseService.initialize(Tables.Expenses);
+    this.currentItems = this.expenseService.load(this.dbName) as Expense[];                                                                                                                                                                                                                                                    
+  }
+
+  search(){
+    this.currentItems = this.expenseService.query(this.dbName)  as Expense[];
+  }
+
+  add(product){
+    let addModal = this.modalCtrl.create('ExpenseCreatePage');
+    addModal.onDidDismiss(expense => {
+      if (expense) {
+        expense._id = Date.now() + ''
+        this.expenseService.add(this.dbName,expense);
+        this.currentItems = this.expenseService.load(this.dbName) as Expense[];
+      }
+    })
+    addModal.present();
+  }
+  
+  delete(record){
+    this.expenseService.delete(this.dbName, record);
+    this.currentItems = this.expenseService.load(this.dbName) as Expense[];
   }
 
 }

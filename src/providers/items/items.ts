@@ -64,6 +64,7 @@ export class ItemsProvider {
         for(let i = 0; i < rows.length; i++){
           items.push(rows[i].doc);
         }
+        items.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime());
       } else {
         console.warn(err);
         

@@ -1,5 +1,5 @@
-import { ItemsProvider } from './../../providers/items/items';
 import { Component } from '@angular/core';
+import { ItemsProvider } from './../../providers/items/items';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Product } from '../../models/product';
 import { Tables } from '../../models/constants';

@@ -1,18 +1,55 @@
-<!--
-  Generated template for the ExpenseCreatePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ExpenseCreate</ion-title>
+    <ion-title>{{ 'EXPENSE_CREATE_TITLE' | translate }}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span color="primary" showWhen="ios">
+          {{ 'CANCEL_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
+        <span color="primary" showWhen="ios">
+          {{ 'DONE_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" placeholder="{{ 'EXPENSE_DESCRITPTION_PLACEHOLDER' | translate }}" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="{{ 'EXPENSE_REFERENCE_PLACEHOLDER' | translate }}" formControlName="reference"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{ 'EXPENSE_QUANTITY_PLACEHOLDER' | translate }}" formControlName="quantity"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{ 'EXPENSE_UNIT_PRICE_PLACEHOLDER' | translate }}" formControlName="unit_price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{ 'EXPENSE_TOTAL_COST_PLACEHOLDER' | translate }}" formControlName="total_cost"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{ 'EXPENSE_AMOUNT_RECEIVED_PLACEHOLDER' | translate }}" formControlName="amount_paid"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{ 'EXPENSE_AMOUNT_REMAINING_PLACEHOLDER' | translate }}" formControlName="amount_remaining"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="date" placeholder="{{ 'EXPENSE_DATE_PLACEHOLDER' | translate }}" formControlName="date"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

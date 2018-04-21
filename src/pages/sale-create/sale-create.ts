@@ -19,6 +19,8 @@ export class SaleCreatePage {
 
   sale: any;
   form:  FormGroup;
+  defaultDate =  Date.now();
+
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder) {
     this.form = formBuilder.group({
       description: [''],
@@ -26,8 +28,8 @@ export class SaleCreatePage {
       date: ['', Validators.required],
       cost_of_sale: ['', Validators.required],
       quantity: ['', Validators.required],
-      received: ['', Validators.required],
-      remaining: ['', Validators.required],
+      amount_received: ['', Validators.required],
+      amount_remaining: ['', Validators.required],
     });
 
     this.form.valueChanges.subscribe((v) => {

@@ -13,6 +13,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import { ItemsProvider } from '../../providers/items/items';
 import { Product } from '../../models/product';
 import { Sale } from '../../models/sale';
+import { Expense } from '../../models/expense';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -23,6 +24,7 @@ export class HomePage {
   tables: any[];
   products: Product[];
   sales: Sale[];
+  expenses: Expense[];
   pdfObject = null;
   params = {
     fromDate: '10-08-2017', // use the datepicker plugin for these later
@@ -43,11 +45,13 @@ export class HomePage {
     }
     this.dbService.initialize(Tables.Inventory);
     this.dbService.initialize(Tables.Sales);
+    this.dbService.initialize(Tables.Expenses);
   }
   
   ionViewDidEnter(){
     this.products = this.dbService.load(Tables.Inventory) as Product[];
     this.sales = this.dbService.load(Tables.Sales) as Sale[];
+    this.expenses = this.dbService.load(Tables.Expenses) as Expense[];
    
   }
   
@@ -98,12 +102,17 @@ export class HomePage {
   createReport(){
     let ptd = []
     let std = []
+    let etd = []
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     for (let i = 0; i < this.products.length; i++){
       ptd.push([this.products[i].date, this.products[i].description, this.products[i].collected, this.products[i].broken, this.products[i].remaining ])
     }
+    
     for (let i = 0; i < this.sales.length; i++){
       std.push([this.sales[i].date, this.sales[i].description, this.sales[i].quantity, this.sales[i].cost_of_sale, this.sales[i].reference ])
+    }
+    for (let i = 0; i < this.expenses.length; i++){
+      etd.push([this.expenses[i].date, this.expenses[i].description, this.expenses[i].quantity, this.expenses[i].unit_price, this.expenses[i].total_cost ])
     }
     var docDefinition = {
       content: [
@@ -116,15 +125,7 @@ export class HomePage {
           alignment: 'center',
           style: 'subheader'
         },
-          '',
-        // { text: new Date(this.params.fromDate).toTimeString() },
         
-        // { text: new Date(this.params.toDate).toTimeString()},
-
-        // { text: this.params.fromDate },
-
-        // this.params.toDate,
-
         { text: 'Les proudctions', style: 'header', alignment: 'center', },
           '',
         {
@@ -147,6 +148,19 @@ export class HomePage {
             body: [
               [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Ramasser', style: 'header' }, { text: 'Casser', style: 'header' }, { text: 'Casser', style: 'header' }]            
             ].concat(std)
+          }
+        },
+
+        //Expenses
+        { text: 'Depense', style: 'header', alignment: 'center', },
+          '',
+        {
+          // alignment: 'center',s
+          table: {
+            headerRows: 1,
+            body: [
+              [{ text: 'Date', style: 'header' }, { text: 'Description', style: 'header' }, { text: 'Quantite', style: 'header' }, { text: 'Prix Unitaire', style: 'header' }, { text: 'Total', style: 'header' }]            
+            ].concat(etd)
           }
         }
       ],
