@@ -51,8 +51,7 @@ export class HomePage {
   ionViewDidEnter(){
     this.products = this.dbService.load(Tables.Inventory) as Product[];
     this.sales = this.dbService.load(Tables.Sales) as Sale[];
-    this.expenses = this.dbService.load(Tables.Expenses) as Expense[];
-   
+    this.expenses = this.dbService.load(Tables.Expenses) as Expense[];   
   }
   
   openTable(table){
@@ -78,7 +77,12 @@ export class HomePage {
    * 
    */
   generateReport(){
-    // alert("generate report called")
+
+    alert(this.params.fromDate)
+    this.dbService.search(Tables.Inventory, this.params.fromDate, this.params.toDate).then((result) =>
+     {    
+    console.log(result)}
+  );
     // const start = this.params.fromDate;
     // const end = this.params.toDate;
     // const tables = [Tables.Inventory]//, Tables.Sales, Tables.Expenses, Tables.Bank ]
@@ -125,7 +129,7 @@ export class HomePage {
           alignment: 'center',
           style: 'subheader'
         },
-        
+
         { text: 'Les proudctions', style: 'header', alignment: 'center', },
           '',
         {

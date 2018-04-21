@@ -72,4 +72,21 @@ export class ItemsProvider {
     });
     return items;
   }
+
+  search(dbName, startDate, endDate){    
+    return this.dbs[dbName].allDocs({include_docs: true}, (err, result) => {
+      let items = []
+      if(!err){
+        let rows = result.rows;
+        for(let i = 0; i < rows.length; i++){
+          items.push(rows[i].doc);
+        }
+        items.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      } else {
+        console.warn(err);
+        
+      }
+    });
+    // return new Promise(items;
+  }
 }

@@ -41,6 +41,8 @@
   "SETTINGS_PAGE_PROFILE": "Edit Profile",
 
   "WELCOME_TITLE": "Welcome",
+  "HOME_TITLE": "Sage Light Clone - ERA",
+  "MAIN_TITLE": "Accounting Books",
 
   "LOGIN_TITLE": "Sign in",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
@@ -50,20 +52,19 @@
   "SIGNUP_BUTTON": "Sign up",
 
   "LIST_MASTER_TITLE": "Items",
-
-  "PROUDCT_CREATE_TITLE": "New Product Entry",
-  "SALE_CREATE_TITLE": "New Sale Entry",
-  "EXPENSE_CREATE_TITLE": "New Expense Entry",
-
   "ITEM_NAME_PLACEHOLDER": "Name",
+
   
+  
+  "PROUDCT_CREATE_TITLE": "New Product Entry",
   "PRODUCT_DESCRITPTION_PLACEHOLDER": "Description",
   "PRODUCT_COLLECTED_COUNT_PLACEHOLDER": "Collected",
   "PRODUCT_BROKEN_COUNT_PLACEHOLDER": "Broken",
   "PRODUCT_REMAINING_COUNT_PLACEHOLDER": "Remaining",
   "PRODUCT_DATE_PLACEHOLDER": "Date",
   "PRODUCT_REFERENCE_PLACEHOLDER": "Reference",
-
+  
+  "SALE_CREATE_TITLE": "New Sale Entry",
   "SALE_DESCRITPTION_PLACEHOLDER": "Description",
   "SALE_REFERENCE_PLACEHOLDER": "Reference",
   "SALE_QUANTITY_PLACEHOLDER": "Quantity",
@@ -71,13 +72,14 @@
   "SALE_AMOUNT_RECEIVED_PLACEHOLDER": "Received",
   "SALE_AMOUNT_REMAINING_PLACEHOLDER": "Remaining",
   "SALE_DATE_PLACEHOLDER": "Date",
-
+  
+  "EXPENSE_CREATE_TITLE": "New Expense Entry",
   "EXPENSE_DESCRITPTION_PLACEHOLDER": "Description",
   "EXPENSE_REFERENCE_PLACEHOLDER": "Reference",
   "EXPENSE_QUANTITY_PLACEHOLDER": "Quantity",
   "EXPENSE_TOTAL_COST_PLACEHOLDER": "Total",
   "EXPENSE_UNIT_PRICE_PLACEHOLDER": "Unit Price",
-  "EXPENSE_AMOUNT_RECEIVED_PLACEHOLDER": "Received",
+  "EXPENSE_AMOUNT_PAID_PLACEHOLDER": "Paid",
   "EXPENSE_AMOUNT_REMAINING_PLACEHOLDER": "Remaining",
   "EXPENSE_DATE_PLACEHOLDER": "Date",
   
